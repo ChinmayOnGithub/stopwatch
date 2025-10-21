@@ -3,11 +3,12 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: transparent;
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
 }
+
 /*
 .active {
     color: #fff;
@@ -73,19 +74,18 @@ body {
 }
 
 @keyframes glow {
-  from { 
+  from {
     text-shadow: 0 0 40px rgba(255, 255, 255, 0.6), 0 0 80px rgba(102, 126, 234, 0.5), 0 0 120px rgba(118, 75, 162, 0.3);
     transform: scale(1);
   }
-  to { 
+
+  to {
     text-shadow: 0 0 60px rgba(255, 255, 255, 1), 0 0 100px rgba(102, 126, 234, 0.8), 0 0 140px rgba(118, 75, 162, 0.6);
     transform: scale(1.02);
   }
 }
 
-.counter-background {
-  /*background: transparent;*/
-}
+
 
 .hide {
   color: rgb(137, 192, 189)
@@ -153,6 +153,7 @@ button.btn.btn-outline-primary.button-pill.px-3:hover {
 }
 
 #navbarSupportedContent {
+  background-color: transparent;
   display: flex;
   flex-direction: row;
 }
@@ -234,15 +235,23 @@ li {
 }
 
 @keyframes heartbeat {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 footer {
   margin-top: auto;
-  padding-left: 0;
-  padding-right: 0;
+  padding: 0 !important;
+  width: 100% !important;
   color: white !important;
   background: transparent !important;
 }
@@ -251,9 +260,9 @@ footer {
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.3) !important;
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.2) !important;
-  min-width: 100%;
+  width: 100% !important;
   padding: 1rem 2rem;
-  margin: 0 auto;
+  margin: 0 !important;
   background: rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(20px);
 }
@@ -281,8 +290,13 @@ footer {
 }
 
 @keyframes progressGlow {
-  from { box-shadow: 0 0 20px rgba(102, 126, 234, 0.6), 0 0 40px rgba(118, 75, 162, 0.3); }
-  to { box-shadow: 0 0 30px rgba(102, 126, 234, 0.9), 0 0 60px rgba(118, 75, 162, 0.5); }
+  from {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.6), 0 0 40px rgba(118, 75, 162, 0.3);
+  }
+
+  to {
+    box-shadow: 0 0 30px rgba(102, 126, 234, 0.9), 0 0 60px rgba(118, 75, 162, 0.5);
+  }
 }
 
 .calendar-btn {
@@ -330,22 +344,29 @@ body.dark-mode .calendar-btn:hover {
 }
 
 .modal {
-  display: none; /* Hidden by default */
+  display: none;
+  /* Hidden by default */
   position: fixed !important;
   z-index: 1000 !important;
   left: 0 !important;
   top: 0 !important;
   width: 100% !important;
   height: 100% !important;
-  background-color: rgba(0,0,0,0.7) !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
   backdrop-filter: blur(5px) !important;
   animation: fadeIn 0.3s ease !important;
-  overflow: auto !important; /* Enable scroll if needed */
+  overflow: auto !important;
+  /* Enable scroll if needed */
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .modal-content {
@@ -357,11 +378,11 @@ body.dark-mode .calendar-btn:hover {
   max-width: 550px;
   max-height: 85vh;
   overflow-y: auto;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
   scroll-behavior: smooth;
   transform: translateY(20px);
   animation: slideUp 0.4s ease forwards;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .pomodoro-modal {
@@ -390,8 +411,15 @@ body:not(.dark-mode) .toggle-switch-label {
 }
 
 @keyframes slideUp {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .modal-header {
@@ -401,7 +429,7 @@ body:not(.dark-mode) .toggle-switch-label {
   padding: 20px 30px;
   background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
   border-radius: 20px 20px 0 0;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-header h2 {
@@ -409,7 +437,7 @@ body:not(.dark-mode) .toggle-switch-label {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .modal-content::-webkit-scrollbar {
@@ -448,7 +476,7 @@ body:not(.dark-mode) .toggle-switch-label {
 .close:hover {
   color: #fff;
   transform: rotate(90deg);
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .form-group {
@@ -488,7 +516,7 @@ body:not(.dark-mode) .toggle-switch-label {
   transition: all 0.3s ease;
   background-color: rgba(30, 30, 30, 0.9);
   color: #e0e0e0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .animated-input input:focus,
@@ -515,8 +543,8 @@ body:not(.dark-mode) .toggle-switch-label {
   transition: width 0.3s ease;
 }
 
-.animated-input input:focus ~ .input-focus-effect,
-.animated-input textarea:focus ~ .input-focus-effect {
+.animated-input input:focus~.input-focus-effect,
+.animated-input textarea:focus~.input-focus-effect {
   width: 100%;
 }
 
@@ -565,11 +593,11 @@ body:not(.dark-mode) .toggle-switch-label {
   transition: all 0.3s ease;
 }
 
-input:checked + .toggle-label .toggle-inner {
+input:checked+.toggle-label .toggle-inner {
   background-color: #ff6b6b;
 }
 
-input:checked + .toggle-label .toggle-inner:before {
+input:checked+.toggle-label .toggle-inner:before {
   transform: translateX(24px);
 }
 
@@ -602,12 +630,14 @@ input:checked + .toggle-label .toggle-inner:before {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
-.submit-btn:hover, .cancel-btn:hover {
+.submit-btn:hover,
+.cancel-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 7px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
 }
 
-.submit-btn:active, .cancel-btn:active {
+.submit-btn:active,
+.cancel-btn:active {
   transform: translateY(1px);
 }
 
@@ -656,7 +686,7 @@ input:checked + .toggle-label .toggle-inner:before {
 
 body.dark-mode {
   color: white;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  background: transparent;
 }
 
 body.dark-mode .video-overlay {
@@ -673,18 +703,18 @@ body.dark-mode .navbar-collapse {
   background: rgba(0, 0, 0, 0.9) !important;
 }
 
-body.dark-mode .nav-item > a {
+body.dark-mode .nav-item>a {
   background-color: rgba(255, 255, 255, 0.1) !important;
   color: white !important;
   border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
-body.dark-mode .nav-item > a:hover {
+body.dark-mode .nav-item>a:hover {
   background-color: #ff6b35 !important;
   color: black !important;
 }
 
-body.dark-mode .nav-item > a#link--active {
+body.dark-mode .nav-item>a#link--active {
   background-color: #ff6b35 !important;
   color: black !important;
 }
@@ -696,6 +726,13 @@ body.dark-mode .my-class {
 
 body.dark-mode footer {
   background: rgba(0, 0, 0, 0.3) !important;
+}
+
+footer .container-fluid {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 body.dark-mode #title1 {
@@ -764,7 +801,7 @@ body.dark-mode .btn-outline-primary:hover {
 }
 
 body.dark-mode #music-controls {
-  background: rgba(0,0,0,0.3) !important;
+  background: rgba(0, 0, 0, 0.3) !important;
 }
 
 body.dark-mode #music-controls h5 {
@@ -821,8 +858,15 @@ body.dark-mode #progress-bar {
 }
 
 @keyframes buttonPulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.6), 0 0 40px rgba(118, 75, 162, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(102, 126, 234, 0.9), 0 0 60px rgba(118, 75, 162, 0.5); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.6), 0 0 40px rgba(118, 75, 162, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 30px rgba(102, 126, 234, 0.9), 0 0 60px rgba(118, 75, 162, 0.5);
+  }
 }
 
 .playlist-category {
@@ -928,6 +972,7 @@ body.dark-mode .track-duration {
 
 @media (max-width: 991px) {
   .navbar-collapse {
+    overflow: hidden;
     position: absolute !important;
     top: 100% !important;
     left: 0 !important;
@@ -939,18 +984,18 @@ body.dark-mode .track-duration {
     min-height: 300px !important;
     padding: 20px 0 !important;
   }
-  
+
   .navbar-nav {
     margin-top: 0 !important;
   }
-  
+
   .nav-item {
     flex-direction: column !important;
     width: 100% !important;
     padding: 0 !important;
   }
-  
-  .nav-item > a {
+
+  .nav-item>a {
     margin: 5px 15px !important;
     padding: 15px 20px !important;
     text-align: center !important;
@@ -962,18 +1007,18 @@ body.dark-mode .track-duration {
     text-decoration: none !important;
     transition: all 0.3s ease !important;
   }
-  
-  .nav-item > a:hover {
+
+  .nav-item>a:hover {
     background-color: #ffd166 !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
   }
-  
-  .nav-item > a#link--active {
+
+  .nav-item>a#link--active {
     background-color: #ffd166 !important;
     box-shadow: 2.5px 2.5px 0 var(--active) !important;
   }
-  
+
   #switch-theme {
     margin-left: 45%;
     margin-top: 25%;
@@ -985,30 +1030,30 @@ body.dark-mode .track-duration {
     font-size: 80px;
     letter-spacing: 6px;
   }
-  
+
   .button-pill {
     font-size: 0.85em;
     padding: 10px 20px;
   }
-  
+
   #counter-background {
     padding: 100px 15px 40px !important;
   }
-  
+
   .buttons {
     font-size: 0.9em;
     padding: 12px 25px;
     margin: 5px;
   }
-  
+
   .progress-container {
     max-width: 90%;
   }
-  
+
   #music-controls {
     padding: 15px !important;
   }
-  
+
   .music-controls-row {
     flex-wrap: wrap;
     gap: 8px !important;
@@ -1024,19 +1069,19 @@ body.dark-mode .track-duration {
     padding: 6px 8px;
     font-size: 14px;
   }
-  
+
   h5 {
     font-size: 1em !important;
   }
-  
+
   h3 {
     font-size: 1.2em !important;
   }
-  
+
   #title1 {
     font-size: 1.1rem;
   }
-  
+
   .maintitle img {
     height: 2.5rem !important;
     width: 2.5rem !important;
@@ -1048,55 +1093,55 @@ body.dark-mode .track-duration {
     font-size: 60px;
     letter-spacing: 4px;
   }
-  
+
   .button-pill {
     font-size: 0.75em;
     padding: 8px 16px;
   }
-  
+
   #counter-background {
     padding: 90px 10px 30px !important;
   }
-  
+
   .buttons {
     font-size: 0.8em;
     padding: 10px 20px;
     margin: 5px;
   }
-  
+
   h5 {
     font-size: 0.9em !important;
   }
-  
+
   h3 {
     font-size: 1.1em !important;
   }
-  
+
   .music-control-btn {
     width: 32px;
     height: 32px;
     font-size: 11px;
   }
-  
+
   #music-controls {
     padding: 12px !important;
   }
-  
+
   .progress-container {
     max-width: 95%;
     height: 6px;
   }
-  
+
   #title1 {
     font-size: 1rem;
   }
-  
+
   .maintitle img {
     height: 2rem !important;
     width: 2rem !important;
     margin-right: 0.5rem !important;
   }
-  
+
   .nav-link {
     font-size: 0.85rem !important;
   }
