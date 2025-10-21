@@ -459,9 +459,14 @@ const setPomoTime = (minutes, skipAudio = false) => {
     $id('seconds').innerHTML = '00';
     currentTime = minutes * 60;
     paused = true;
-    $id('timer-control').innerHTML = '<i class="fas fa-play-circle"></i> Start';
-    $id('counter-background').classList.remove('active');
-    $id('counter-background').classList.add('inactive');
+    if ($id('timer-control')) {
+        $id('timer-control').innerHTML = '<i class="fas fa-play-circle"></i> Start';
+    }
+    const counterBg = $id('counter-background');
+    if (counterBg) {
+        counterBg.classList.remove('active');
+        counterBg.classList.add('inactive');
+    }
     clearInterval(intervalId);
     isFirstLoad = false;
     updateModeDisplay();
@@ -499,19 +504,40 @@ const switchMode = () => {
 };
 
 const reset = () => {
+    // Stop the timer
+    clearInterval(intervalId);
+    paused = true;
+    
+    // Reset UI state
     $id('counter-background').classList.remove('inactive');
     $id('counter-background').classList.add('active');
+    
+    // Update button text
+    if ($id('timer-control')) {
+        $id('timer-control').innerHTML = '<i class="fas fa-play-circle"></i> Start';
+    }
+    
+    // Reset theme styling
     if (darkTheme) {
         $('.active').css({ "color": "#7fe9d4", "background": "transparent" });
     } else {
         $('.active').css({ "background": "transparent" });
     }
+    
+    // Reset session state
     sessionActive = false;
     isFocusMode = true;
+    
+    // Reset to focus time
+    setPomoTime(focusTime);
+    
+    // Reset document title
+    document.title = originalTitle;
+    
+    // Play reset sound
     audio.play().catch(() => {
         console.log('Audio play blocked by browser');
     });
-    setPomoTime(focusTime); // Reset to focus time
 };
 
 const updateTimerDisplay = () => {
@@ -548,11 +574,16 @@ const startPomoCounter = () => {
         sessionActive = true;
     }
 
-    $id('timer-control').innerHTML = paused ? '<i class="fas fa-play-circle"></i> Start' : '<i class="fas fa-pause-circle"></i> Pause';
+    if ($id('timer-control')) {
+        $id('timer-control').innerHTML = paused ? '<i class="fas fa-play-circle"></i> Start' : '<i class="fas fa-pause-circle"></i> Pause';
+    }
 
     if (!paused) {
-        $id('counter-background').classList.remove('active');
-        $id('counter-background').classList.add('inactive');
+        const counterBg = $id('counter-background');
+        if (counterBg) {
+            counterBg.classList.remove('active');
+            counterBg.classList.add('inactive');
+        }
 
         intervalId = setInterval(() => {
             if (currentTime > 0) {
@@ -563,9 +594,14 @@ const startPomoCounter = () => {
                 clearInterval(intervalId);
                 paused = true;
                 showCompletionNotification();
-                $id('timer-control').innerHTML = '<i class="fas fa-play-circle"></i> Start';
-                $id('counter-background').classList.remove('inactive');
-                $id('counter-background').classList.add('active');
+                if ($id('timer-control')) {
+                    $id('timer-control').innerHTML = '<i class="fas fa-play-circle"></i> Start';
+                }
+                const counterBg = $id('counter-background');
+                if (counterBg) {
+                    counterBg.classList.remove('inactive');
+                    counterBg.classList.add('active');
+                }
 
                 if (darkTheme) {
                     $('.active').css({ "color": "#7fe9d4", "background": "transparent" });
@@ -580,9 +616,14 @@ const startPomoCounter = () => {
         }, 1000);
     } else {
         clearInterval(intervalId);
-        $id('timer-control').innerHTML = '<i class="fas fa-play-circle"></i> Start';
-        $id('counter-background').classList.remove('inactive');
-        $id('counter-background').classList.add('active');
+        if ($id('timer-control')) {
+            $id('timer-control').innerHTML = '<i class="fas fa-play-circle"></i> Start';
+        }
+        const counterBg = $id('counter-background');
+        if (counterBg) {
+            counterBg.classList.remove('inactive');
+            counterBg.classList.add('active');
+        }
         document.title = originalTitle;//on pause , page title appears
     }
 };
@@ -1027,6 +1068,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000);
 });
 
+// Calendar API helper functions
+function hasAPICredentials() {
+    return false; // Calendar integration not implemented yet
+}
+
+function gapiLoaded() {
+    console.log('Google API loaded');
+}
+
+function gisLoaded() {
+    console.log('Google Identity Services loaded');
+}
+
+function maybeEnableButtons() {
+    // Enable calendar buttons when API is ready
+    const scheduleBtn = document.getElementById('schedule-btn');
+    if (scheduleBtn) {
+        scheduleBtn.style.display = 'inline-block';
+    }
+}
+
 window.addEventListener('load', () => {
     if (hasAPICredentials() && typeof gapi !== 'undefined') {
         gapiLoaded();
@@ -1036,7 +1098,7 @@ window.addEventListener('load', () => {
     }
     
     if (!hasAPICredentials()) {
-        calendarMode = 'universal';
+        let calendarMode = 'universal';
         maybeEnableButtons();
     }
 });
