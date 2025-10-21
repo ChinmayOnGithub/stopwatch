@@ -238,17 +238,29 @@ footer .container-fluid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: 25px;
+  align-items: flex-end;
+  gap: 20px;
   padding: 0;
   margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  #custom-timer-form {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
 }
 
 .form__group {
   position: relative;
   padding: 15px 0 0;
   width: 100%;
-  max-width: 170px;
+  max-width: 140px;
+}
+
+.form__group.field {
+  min-width: 120px;
 }
 
 .form__field {
