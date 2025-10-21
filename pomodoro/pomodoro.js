@@ -508,14 +508,15 @@ const reset = () => {
     clearInterval(intervalId);
     paused = true;
     
-    // Reset UI state
-    $id('counter-background').classList.remove('inactive');
-    $id('counter-background').classList.add('active');
+    // Reset session state
+    sessionActive = false;
+    isFocusMode = true;
     
-    // Update button text
-    if ($id('timer-control')) {
-        $id('timer-control').innerHTML = '<i class="fas fa-play-circle"></i> Start';
-    }
+    // Reset to focus time (this will handle UI updates)
+    setPomoTime(focusTime);
+    
+    // Reset document title
+    document.title = originalTitle;
     
     // Reset theme styling
     if (darkTheme) {
@@ -523,21 +524,6 @@ const reset = () => {
     } else {
         $('.active').css({ "background": "transparent" });
     }
-    
-    // Reset session state
-    sessionActive = false;
-    isFocusMode = true;
-    
-    // Reset to focus time
-    setPomoTime(focusTime);
-    
-    // Reset document title
-    document.title = originalTitle;
-    
-    // Play reset sound
-    audio.play().catch(() => {
-        console.log('Audio play blocked by browser');
-    });
 };
 
 const updateTimerDisplay = () => {
