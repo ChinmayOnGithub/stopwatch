@@ -972,7 +972,6 @@ body.dark-mode .track-duration {
 
 @media (max-width: 991px) {
   .navbar-collapse {
-    overflow: hidden;
     position: absolute !important;
     top: 100% !important;
     left: 0 !important;
