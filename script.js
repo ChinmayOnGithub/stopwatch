@@ -42,10 +42,10 @@ let isTickEnabled = false;
 document.addEventListener("DOMContentLoaded", function () {
   // Load saved state from localStorage
   loadStopwatchState();
-  
+
   // Load dark mode preference
   loadDarkModePreference();
-  
+
   // Initialize tick toggle
   tickToggle = document.getElementById("tickToggle");
   if (tickToggle) {
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Handle real-time toggle during stopwatch running
       if (timer) {
         if (isTickEnabled) {
-          tickSound.play().catch(() => {});
+          tickSound.play().catch(() => { });
         } else {
           tickSound.pause();
           tickSound.currentTime = 0;
@@ -66,10 +66,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-  
+
   // Setup dark mode toggle
   setupDarkModeToggle();
-  
+
   // Initialize voice control (NEW)
   initializeVoiceControl();
 });
@@ -101,7 +101,7 @@ function loadStopwatchState() {
         sec = state.sec || 0;
         count = state.count || 0;
         lapCounter = state.lapCounter || 1;
-        
+
         // Update display
         updateDisplay();
       }
@@ -125,7 +125,7 @@ function updateDisplay() {
 function setupDarkModeToggle() {
   const checkbox = document.getElementById("light");
   if (checkbox) {
-    checkbox.addEventListener("change", function() {
+    checkbox.addEventListener("change", function () {
       document.body.classList.toggle("dark-mode");
       // Save preference
       localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
@@ -136,7 +136,7 @@ function setupDarkModeToggle() {
 function loadDarkModePreference() {
   const darkMode = localStorage.getItem('darkMode');
   const checkbox = document.getElementById("light");
-  
+
   if (darkMode === 'true') {
     document.body.classList.add('dark-mode');
     if (checkbox) checkbox.checked = true;
@@ -152,8 +152,10 @@ function $id(id) {
 
 // Play sound effect
 function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play().catch(() => {});
+  if (sound && sound.readyState >= 2) {
+    sound.currentTime = 0;
+    sound.play().catch(() => { });
+  }
 }
 
 // ============================================
@@ -163,27 +165,27 @@ function playSound(sound) {
 function start() {
   if (!timer) {
     timer = true;
-    
+
     // Play start sound
     playSound(startSound);
-    
+
     if (isTickEnabled) {
-      tickSound.play().catch(() => {});
+      tickSound.play().catch(() => { });
     }
     if ($id("start"))
       $id("start").innerHTML = '<i class="far fa-pause-circle"></i> Pause';
     stopwatch();
   } else {
     timer = false;
-    
+
     // Play beep sound on pause
     playSound(beepSound);
-    
+
     tickSound.pause();
     if ($id("start"))
       $id("start").innerHTML = '<i class="far fa-play-circle"></i> Start';
   }
-  
+
   // Save state
   saveStopwatchState();
 }
@@ -201,10 +203,10 @@ function stop() {
 function reset() {
   if ($id("record-container")) $id("record-container").style.display = "none";
   timer = false;
-  
+
   // Play beep sound on reset
   playSound(beepSound);
-  
+
   tickSound.pause();
   tickSound.currentTime = 0;
   if ($id("start"))
@@ -226,7 +228,7 @@ function reset() {
   if ($id("record-table-body")) $id("record-table-body").innerHTML = "";
   lapCounter = 1;
 
-    // CLEAR COUNTDOWN INPUT & PRESETS
+  // CLEAR COUNTDOWN INPUT & PRESETS
   const countdownInput = $id("countdown-minutes");
   if (countdownInput) {
     countdownInput.value = "";
@@ -239,7 +241,7 @@ function reset() {
   document.querySelectorAll('.preset-btn').forEach(btn => {
     btn.classList.remove('active');
   });
-  
+
   // Clear saved state
   localStorage.removeItem('stopwatchState');
 }
@@ -319,7 +321,7 @@ function lap() {
   if (timer) {
     // Play beep sound
     playSound(beepSound);
-    
+
     if ($id("record-container"))
       $id("record-container").style.display = "block";
     getdiff();
@@ -335,7 +337,7 @@ function lap() {
 
     const table = $id("record-table-body");
     if (table) {
-      const row = table.insertCell(0);
+      const row = table.insertRow(0);
       const no_cell = row.insertCell(0);
       const time_cell = row.insertCell(1);
       const diff_cell = row.insertCell(2);
@@ -505,28 +507,28 @@ function setPresetTimer(minutes) {
   presetSound.play().catch(() => {
     // Ignore audio play errors (browser restrictions)
   });
-  
+
   // Set the input value
   document.getElementById("countdown-minutes").value = minutes;
-  
+
   // Update active preset button
   document.querySelectorAll('.preset-btn').forEach(btn => {
     btn.classList.remove('active');
   });
-  
+
   // Find and activate the clicked preset
   const clickedBtn = document.querySelector(`[data-minutes="${minutes}"]`);
   if (clickedBtn) {
     clickedBtn.classList.add('active');
   }
-  
+
   // Add visual feedback to input field
   const input = document.getElementById("countdown-minutes");
   input.style.border = "2px solid #ffb703";
   input.style.background = "rgba(255, 183, 3, 0.1)";
   input.style.color = "white";
   input.style.transform = "scale(1.02)";
-  
+
   setTimeout(() => {
     input.style.transform = "scale(1)";
     input.style.background = "rgba(255, 255, 255, 0.08)";
@@ -539,123 +541,123 @@ function setPresetTimer(minutes) {
 // ============================================
 
 function initializeVoiceControl() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const voiceStatus = $id('voice-command-status');
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const voiceStatus = $id('voice-command-status');
 
-    if (!SpeechRecognition) {
-        if (voiceStatus) {
-            voiceStatus.style.display = 'block';
-            voiceStatus.innerHTML = '❌ Voice control not supported in this browser.';
-            voiceStatus.style.color = '#ff0000';
-        }
-        return;
+  if (!SpeechRecognition) {
+    if (voiceStatus) {
+      voiceStatus.style.display = 'block';
+      voiceStatus.innerHTML = '❌ Voice control not supported in this browser.';
+      voiceStatus.style.color = '#ff0000';
+    }
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = false;
+  recognition.lang = 'en-US';
+
+  recognition.onstart = function () {
+    if (voiceStatus) {
+      voiceStatus.style.display = 'block';
+      voiceStatus.innerHTML = '<i class="fas fa-microphone-alt"></i> **LISTENING:** Say "Start", "Stop", "Reset", or "Lap"';
+      voiceStatus.style.color = '#43c6ac';
+    }
+  };
+
+  recognition.onresult = function (event) {
+    const last = event.results.length - 1;
+    const rawCommand = event.results[last][0].transcript.trim();
+    const command = rawCommand.toLowerCase();
+
+    if (voiceStatus) {
+      voiceStatus.innerHTML = `<i class="fas fa-bullhorn"></i> **COMMAND HEARD:** "${rawCommand}"`;
+      voiceStatus.style.color = '#ffd166';
     }
 
-    const recognition = new SpeechRecognition();
-    recognition.continuous = true;
-    recognition.interimResults = false;
-    recognition.lang = 'en-US';
-
-    recognition.onstart = function() {
+    if (mode === 'stopwatch') {
+      if (command.includes('start') || command.includes('stop') || command.includes('pause')) {
+        start();
         if (voiceStatus) {
-            voiceStatus.style.display = 'block';
-            voiceStatus.innerHTML = '<i class="fas fa-microphone-alt"></i> **LISTENING:** Say "Start", "Stop", "Reset", or "Lap"';
-            voiceStatus.style.color = '#43c6ac';
+          const action = timer ? 'Started' : 'Paused';
+          const icon = timer ? '<i class="fas fa-running"></i>' : '<i class="fas fa-pause-circle"></i>';
+          voiceStatus.innerHTML = `${icon} **ACTION:** Stopwatch ${action}.`;
+          voiceStatus.style.color = '#00ff00';
         }
-    };
-
-    recognition.onresult = function(event) {
-        const last = event.results.length - 1;
-        const rawCommand = event.results[last][0].transcript.trim();
-        const command = rawCommand.toLowerCase();
-        
+      } else if (command.includes('reset')) {
+        reset();
         if (voiceStatus) {
-            voiceStatus.innerHTML = `<i class="fas fa-bullhorn"></i> **COMMAND HEARD:** "${rawCommand}"`;
-            voiceStatus.style.color = '#ffd166';
+          voiceStatus.innerHTML = '<i class="fas fa-undo"></i> **ACTION:** Stopwatch Reset.';
+          voiceStatus.style.color = '#00ff00';
         }
-
-        if (mode === 'stopwatch') {
-            if (command.includes('start') || command.includes('stop') || command.includes('pause')) {
-                start();
-                if (voiceStatus) {
-                    const action = timer ? 'Started' : 'Paused';
-                    const icon = timer ? '<i class="fas fa-running"></i>' : '<i class="fas fa-pause-circle"></i>';
-                    voiceStatus.innerHTML = `${icon} **ACTION:** Stopwatch ${action}.`;
-                    voiceStatus.style.color = '#00ff00';
-                }
-            } else if (command.includes('reset')) {
-                reset();
-                if (voiceStatus) {
-                    voiceStatus.innerHTML = '<i class="fas fa-undo"></i> **ACTION:** Stopwatch Reset.';
-                    voiceStatus.style.color = '#00ff00';
-                }
-            } else if (command.includes('lap')) {
-                lap();
-                if (voiceStatus) {
-                    voiceStatus.innerHTML = '<i class="fas fa-stopwatch"></i> **ACTION:** Lap Recorded.';
-                    voiceStatus.style.color = '#00ff00';
-                }
-            } else {
-                 // Reset status for unrecognized command
-                if (voiceStatus) {
-                    voiceStatus.innerHTML = '🤷 **DID NOT RECOGNIZE:** Please try "Start" or "Reset"';
-                    voiceStatus.style.color = '#ff6b35';
-                }
-            }
-        }
-    };
-
-    recognition.onerror = function(event) {
+      } else if (command.includes('lap')) {
+        lap();
         if (voiceStatus) {
-            voiceStatus.innerHTML = `⚠️ **ERROR:** Restarting voice service.`;
-            voiceStatus.style.color = '#ff6b35';
+          voiceStatus.innerHTML = '<i class="fas fa-stopwatch"></i> **ACTION:** Lap Recorded.';
+          voiceStatus.style.color = '#00ff00';
         }
-    };
-
-    recognition.onend = function() {
-     
-        if (mode === 'stopwatch') {
-             recognition.start();
-        } else if (voiceStatus) {
-             voiceStatus.innerHTML = '💤 Voice Control is inactive in Countdown Mode.';
+      } else {
+        // Reset status for unrecognized command
+        if (voiceStatus) {
+          voiceStatus.innerHTML = '🤷 **DID NOT RECOGNIZE:** Please try "Start" or "Reset"';
+          voiceStatus.style.color = '#ff6b35';
         }
-    };
+      }
+    }
+  };
 
-    recognition.start();
+  recognition.onerror = function (event) {
+    if (voiceStatus) {
+      voiceStatus.innerHTML = `⚠️ **ERROR:** Restarting voice service.`;
+      voiceStatus.style.color = '#ff6b35';
+    }
+  };
+
+  recognition.onend = function () {
+
+    if (mode === 'stopwatch') {
+      recognition.start();
+    } else if (voiceStatus) {
+      voiceStatus.innerHTML = '💤 Voice Control is inactive in Countdown Mode.';
+    }
+  };
+
+  recognition.start();
 }
-document.addEventListener('keydown', function(event) {
-    switch(event.key.toLowerCase()) {
-        case ' ':
-            event.preventDefault();
-            startPauseStopwatch(); 
-            break;
-        case 'r':
-            resetStopwatch();
-            break;
-        case 'l':
-            recordLap();
-            break;
-        case 'c':
-            startCountdownTimer();
-            break;
-    }
+document.addEventListener('keydown', function (event) {
+  switch (event.key.toLowerCase()) {
+    case ' ':
+      event.preventDefault();
+      startPauseStopwatch();
+      break;
+    case 'r':
+      resetStopwatch();
+      break;
+    case 'l':
+      recordLap();
+      break;
+    case 'c':
+      startCountdownTimer();
+      break;
+  }
 });
 function startPauseStopwatch() {
-    start();
+  start();
 }
 function resetStopwatch() {
-    reset();
+  reset();
 }
 function recordLap() {
-    lap();
+  lap();
 }
 function startCountdownTimer() {
-    if (mode === "countdown") {
-        document.getElementById("start-countdown").click();
-    } else {
-        mode = "countdown";
-        countdownBtn.click();
-        document.getElementById("start-countdown").click();
-    } 
+  if (mode === "countdown") {
+    document.getElementById("start-countdown").click();
+  } else {
+    mode = "countdown";
+    countdownBtn.click();
+    document.getElementById("start-countdown").click();
+  }
 }
 
