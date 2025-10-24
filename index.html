@@ -98,13 +98,21 @@
             <button class="preset-btn" onclick="setPresetTimer(60)" data-minutes="60">1 hour</button>
           </div>
         </div>
-
-        <input type="number" id="countdown-minutes" placeholder="Enter minutes..." min="0" class="countdown-input" />
+        
+        <input 
+          type="number" 
+          id="countdown-minutes" 
+          placeholder="Enter minutes..." 
+          min="0.1"
+          step="0.1"
+          class="countdown-input"
+        />
 
         <button id="start-countdown" class="countdown-btn">
           Start Countdown
         </button>
       </div>
+      
       <div>
         <div id="time">
           <span>

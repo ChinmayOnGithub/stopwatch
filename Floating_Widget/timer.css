@@ -1,12 +1,11 @@
 body {
-  height: 100vh;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
   overflow-x: hidden;
   overflow-y: auto;
-  position: relative;
-  background: transparent;
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
 }
 
 /* Video Background - Enhanced feature, falls back gracefully */
@@ -20,27 +19,261 @@ body {
   overflow: hidden;
 }
 
-@font-face {
-  font-family: 'digital-7';
-  src: url('fonts/digital-7.ttf');
+.video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8; /* Ensure visibility of overlaid content */
 }
 
-/* Main layout and body styles */
-body {
+/* Overlay to improve readability */
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
   height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-  position: relative;
-  background: transparent;
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: -1;
 }
 
-/* Timer display container */
-#counter-background {
-  padding: 140px 20px 60px;
-  min-height: 100vh;
+/* Navbar Styling */
+.thinner {
+  margin-top: 0;
+  margin-bottom: 0px;
+  height: 90px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: transparent !important;
+}
+
+/* Ensure navbar sticks to top */
+nav.navbar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  max-height: 70px;
+  background: transparent !important;
+}
+
+/* Enhanced Glass-like transparent effect for navcol */
+.navcol {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(15px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(15px) saturate(150%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-top: none !important;
+  border-radius: 0 0 25px 25px !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  position: relative !important;
+}
+
+.navcol::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.02) 100%
+  ) !important;
+  border-radius: 0 0 25px 25px !important;
+  pointer-events: none;
+}
+
+.container-fluid {
+  padding: 0.3rem;
+}
+
+/* Main content container styling to match other pages */
+body > .container-fluid {
+  min-height: calc(100vh - 290px);
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container-fluid-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.maintitle {
+  min-height: 60px;
+  max-height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease !important;
+}
+
+#title1 {
+  font-weight: 700;
+  font-size: 1.7rem;
+  color: #ffffff !important;
+}
+
+/* Main content container styling to match other pages */
+body > .container-fluid {
+  min-height: calc(100vh - 200px);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Navigation links always dark - matching main page */
+.nav-link {
+  color: #003333 !important;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #ff6b35 !important;
+}
+
+/* Main container styling to match stopwatch page */
+#container {
+  background: transparent !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  border-radius: 0 !important;
+  padding: 0;
+  box-shadow: none !important;
+  text-align: center;
+  transition: all 0.3s ease;
+  margin: 30px auto 0;
+  max-width: 800px;
+  width: 90%;
+}
+
+#container:hover {
+  transform: none;
+}
+
+/* Time display styling */
+#time {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin: 20px 0;
+  letter-spacing: 0;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  padding: 15px 0;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.digit {
+  font-size: 80px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  font-family: "digital-7";
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.txt {
+  font-size: 60px;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 0 4px;
+  font-family: "digital-7";
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Button container */
+#btn-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+/* Custom timer form */
+#custom-timer-form {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: flex-end;
+  flex-direction: row;
+}
+
+/* Progress section */
+#progress-section {
+  margin: 5px 0;
+}
+
+#progress-container {
+  width: 100%;
+  height: 8px;
+  background-color: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 5px auto;
+  max-width: 400px;
+}
+
+#progress-bar {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #21f341, #116399);
+  transition: width 1s linear;
+}
+
+/* Today's date styling */
+.todayDate {
+  margin: 5px 0;
+}
+
+.todayDate h3 {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* Focus display */
+#focus-display {
+  margin: 5px 0;
+}
+
+#focus-display h1 {
+  color: #7fe9d4;
+  font-size: 1.5rem;
+  margin: 0;
 }
 
 input:focus {
@@ -65,36 +298,70 @@ input:focus {
 
 .inactive {
   color: rgb(169, 188, 214);
-  background: transparent;
-  transition: background-color 0.3s ease;
+  background: rgb(5, 30, 54);
+  transition: background-color 0.5s ease;
 }
 
 .active {
-  color: #fff;
-  background: transparent;
-  transition: background-color 0.3s ease;
+  color: #333;
+  background: white;
+
+  transition: background-color 0.5s ease;
 }
 
 .button-pill {
+  font-size: 1.2em;
+  border-radius: 40px;
+  color: hsl(127, 100%, 57%);
+  border: 2px solid hsl(127, 100%, 57%);
+}
+
+/* Round buttons for timer controls */
+.round-btn {
   font-size: 1em;
-  border-radius: 35px;
-  padding: 14px 32px;
-  font-weight: 500;
+  border-radius: 50px;
+  color: #fff;
+  background-color: transparent;
+  border: 2px solid #fff;
+  padding: 10px 25px;
+  margin: 0 10px;
+  cursor: pointer;
   transition: all 0.3s ease;
-  border: 2px solid rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  color: white;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  min-width: 110px;
+  text-align: center;
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+}
+
+.round-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.round-btn:active {
+  transform: translateY(1px);
+}
+
+#timer-control {
+  border-color: #00ff00;
+  color: #00ff00;
+}
+
+#reset {
+  border-color: #9900ff;
+  color: #9900ff;
+}
+
+#stop-alarm {
+  border-color: #ff0000;
+  color: #ff0000;
 }
 
 .timer {
-  font-size: 160px;
-  font-family: 'digital-7', monospace;
-  text-shadow: 0 0 60px rgba(255, 255, 255, 0.8), 0 0 100px rgba(102, 126, 234, 0.6), 0 0 140px rgba(118, 75, 162, 0.4);
+  font-size: 100px;
+  font-family: "digital-7";
   color: #ffffff;
-  font-weight: 300;
-  letter-spacing: 15px;
 }
 
 .counter-background {
@@ -155,145 +422,70 @@ button.btn.btn-outline-primary.button-pill.px-3 {
 }
 
 button.btn.btn-outline-primary.button-pill.px-3:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-  background: rgba(255, 255, 255, 0.25);
-  border-color: white;
+  transform: scale(1.1);
+  box-shadow: 1px 1px 12px 7px blue;
 }
 
-/* Navigation styles now come from main style.css */
+button.col-auto.bg-dark.button-pill.py-1.px-4.mx-2.inactive {
+  transition: transform 0.03s;
+}
+
+button.col-auto.bg-dark.button-pill.py-1.px-4.mx-2.inactive:hover {
+  transform: scale(1.05);
+  box-shadow: 1px 1px 12px 7px rgb(119, 204, 238);
+}
+
+.col-auto {
+  display: flex;
+  align-items: center;
+}
+
+.time {
+  margin: 0 0.5rem 0 0;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+}
+
+#navbarSupportedContent {
+  display: flex;
+  flex-direction: row;
+}
+
+#nav-links {
+  display: flex;
+  flex-direction: row;
+}
 
 #title1 {
   font-weight: 700;
   font-size: 1.3rem;
-  color: white;
 }
 
-#link--active {
-  box-shadow: none;
-  background-color: #FFD166;
-  box-shadow: 2.5px 2.5px 0 var(--active);
-}
-
-.hov {
-  width: max(4.5vw, 3rem);
-  height: max(4.5vw, 3rem);
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.hov:hover {
-  transform: translateY(-3px);
-  filter: brightness(1.1);
-}
-
-.hov:hover .link {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-color: rgba(102, 126, 234, 0.8);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-  color: white;
-}
-
-.social-links {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
-  gap: 20px;
-}
-
-li {
-  width: max(4.5vw, 3rem);
-  height: max(4.5vw, 3rem);
-  list-style: none;
-  margin: 8px;
-}
-
-.link {
-  width: 100%;
-  height: 100%;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  font-size: 18px;
-  transition: all 0.3s ease;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-}
-
-.textfooter {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 10px 0;
-  text-align: center;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-  color: white;
-}
-
-.textfooter .heart {
-  color: #ff4757 !important;
-  font-size: 1.3rem;
-}
-
-footer {
-  margin-top: auto;
-  padding: 0 !important;
-  width: 100% !important;
-  color: white !important;
-  background: transparent !important;
-}
-
-.my-class {
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.3) !important;
-  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.2) !important;
-  width: 100% !important;
-  padding: 1rem 2rem;
-  margin: 0 !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(20px);
-}
-
-footer .container-fluid {
-  width: 100% !important;
-  max-width: 100% !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+#timer-container {
+  margin-top: 0 !important;
 }
 
 #custom-timer-form {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 20px;
-  padding: 0;
-  margin-bottom: 40px;
+  min-height: 100px;
+  gap: 10px;
 }
 
-@media (max-width: 768px) {
-  #custom-timer-form {
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-  }
-}
 
-.form__group {
+
+/* input fields  */
+.form__group, .btn-group {
   position: relative;
-  padding: 15px 0 0;
-  width: 100%;
-  max-width: 140px;
+  padding: 10px 0 0;
+  width: auto;
+  max-width: 110px;
+  margin: 0 5px;
 }
 
-.form__group.field {
-  min-width: 120px;
-}
-  
 .btn-group {
   display: flex;
   align-items: flex-end;
@@ -310,18 +502,8 @@ footer .container-fluid {
   color: #fff;
   padding: 5px 0;
   background: transparent;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  -webkit-appearance: none;
-  -moz-appearance: textfield;
-  appearance: none;
+  transition: border-color 0.2s;
   min-width: 80px;
-}
-
-.form__field::-webkit-outer-spin-button,
-.form__field::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
 
 .form__field::placeholder {
@@ -348,7 +530,6 @@ footer .container-fluid {
   padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
-  border-color: white;
   border-image: linear-gradient(to right, #116399, #21f341);
   border-image-slice: 1;
 }
@@ -384,8 +565,6 @@ footer .container-fluid {
   box-shadow: 0 0 0 2px #ffffff;
   cursor: pointer;
   overflow: hidden;
-/*   transition: all 0.3s ease; */
-  backdrop-filter: blur(10px);
   transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
   margin-bottom: 6px;
   height: 34px;
@@ -415,8 +594,7 @@ footer .container-fluid {
 }
 
 .animated-button:active {
-/*   scale: 0.95; */
-  transform: scale(0.95);
+  scale: 0.95;
 }
 
 .animated-button:hover span:last-child {
@@ -524,40 +702,14 @@ footer {
   margin: 0;
 }
 
-.animated-button span:last-child {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  background-color: white;
-  border-radius: 50%;
-  opacity: 0;
-  transition: all 0.3s ease;
+.hidden {
+  display: none !important;
 }
 
-.animated-button span:first-child {
-  position: relative;
-  z-index: 1;
+#time.pulse {
+  animation: pulse 0.8s ease-in-out infinite alternate;
 }
 
-.animated-button:hover {
-  box-shadow: 0 0 0 2px white, 0 10px 25px rgba(255, 255, 255, 0.3);
-  color: #f5576c;
-  transform: translateY(-2px);
-}
-
-.animated-button:active {
-  scale: 0.95;
-}
-
-.animated-button:hover span:last-child {
-  width: 200px;
-  height: 200px;
-  opacity: 1;
- }
-  
 @keyframes pulse {
   from {
     transform: scale(1);
@@ -592,93 +744,34 @@ footer {
   animation: confetti-fall linear forwards;
 }
 
-.hidden {
-  display: none !important;
-}
-/* Progress Bar Styles */
-#progress-container {
-  width: 100%;
-  max-width: 600px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 15px;
-  overflow: hidden;
-  margin: 35px auto;
-  backdrop-filter: blur(10px);
-  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-#progress-bar {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  transition: width 0.25s linear;
-  border-radius: 10px;
-  box-shadow: 0 0 30px rgba(102, 126, 234, 0.8), 0 0 50px rgba(118, 75, 162, 0.4);
-}
-
-.buttons {
-  font-size: 1em;
-  border-radius: 35px;
-  padding: 14px 32px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  border: 2px solid rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  color: white;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  outline: none;
-  cursor: pointer;
-}
-
-.buttons:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.25);
-  border-color: white;
-}
-
-.buttons:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
-}
-
-#confetti {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 9999;
-}
-
-.confetti {
-  position: absolute;
-  top: -10vh;
-  width: 10px;
-  height: 14px;
-  opacity: 0.9;
-  transform: translateY(-100px) rotate(0deg);
-  animation: confetti-fall linear forwards;
-}
-
 @keyframes confetti-fall {
   to {
     transform: translateY(120vh) rotate(720deg);
     opacity: 1;
   }
 }
-
-body.dark-mode {
-  color: white;
-  background: transparent;
+/* Progress Bar Styles */
+#progress-container {
+  width: 100%;
+  height: 20px;
+  background-color: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Dark mode navbar styles now come from main style.css */
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #21f341, #116399);
+  transition: width 0.5s linear;
+  border-radius: 10px;
+}
 
-body.dark-mode .my-class {
-  background: rgba(0, 0, 0, 0.3) !important;
-  backdrop-filter: blur(20px);
+/* Dark Mode Styles for Custom Timer */
+body.dark-mode {
+  color: white;
+  background: transparent !important;
 }
 
 body.dark-mode .navbar {
@@ -694,19 +787,20 @@ body.dark-mode .nav-link {
 }
 
 body.dark-mode .nav-link:hover {
-  color: #667eea !important;
+  color: #ff6b35 !important;
 }
 
 body.dark-mode .timer {
-  color: #ffffff !important;
-  text-shadow: 0 0 40px rgba(102, 126, 234, 0.6), 0 0 80px rgba(118, 75, 162, 0.4) !important;
+  color: #ff6b35 !important;
 }
 
 body.dark-mode .active {
-  color: #667eea !important;
+  color: #ff6b35 !important;
+  background: #191212 !important;
 }
 
 body.dark-mode .inactive {
+  background: black !important;
   color: white !important;
 }
 
@@ -716,15 +810,13 @@ body.dark-mode .buttons {
   color: #ff6b35 !important;
 }
 
-/* Dark mode hover for main buttons */
 body.dark-mode .buttons:hover {
-  background: rgba(255, 255, 255, 0.35) !important; /* from enh/ui */
-  transform: translateY(-3px); /* from enh/ui */
-  box-shadow: 0 15px 30px rgba(255, 255, 255, 0.3) !important; /* from enh/ui */
-  color: black !important; /* optional: keeps text readable if needed */
+  background: #ff6b35 !important;
+  color: black !important;
+  box-shadow: 0 8px 15px rgba(255, 107, 53, 0.4) !important;
 }
 
-/* Dark mode styling for round buttons (from main) */
+/* Dark mode styling for round buttons */
 body.dark-mode .round-btn {
   border-color: #ff6b35 !important;
   color: #ff6b35 !important;
@@ -734,12 +826,10 @@ body.dark-mode .round-btn:hover {
   box-shadow: 0 0 15px rgba(255, 107, 53, 0.5) !important;
 }
 
-/* Footer text color in dark mode */
 body.dark-mode .textfooter {
   color: white !important;
 }
 
-/* Social icon adjustments for dark mode */
 body.dark-mode .social-icon {
   background-color: white !important;
 }
@@ -748,19 +838,17 @@ body.dark-mode .social-icon i {
   color: black !important;
 }
 
-body.dark-mode .textfooter {
-  color: white !important;
+body.dark-mode .social-circle i {
+  color: black !important;
 }
 
-/* Dark mode styling for social links */
 body.dark-mode .link {
-  background: rgba(102, 126, 234, 0.3) !important; /* from enh/ui */
-  color: white !important; /* from enh/ui */
-  border: 2px solid rgba(255, 209, 102, 0.2) !important; /* from main */
-  font-size: 22px; /* from main */
+  background-color: white !important;
+  color: #333 !important;
+  border: 2px solid rgba(255, 209, 102, 0.2) !important;
+  font-size: 22px;
 }
 
-/* Hover effect for links */
 body.dark-mode .hov:hover .link {
   transform: scale(1.05);
   box-shadow: 0 0 10px rgba(255, 209, 102, 0.7);
@@ -768,20 +856,20 @@ body.dark-mode .hov:hover .link {
   filter: brightness(1.1) drop-shadow(0 0 5px rgba(255, 209, 102, 0.5));
 }
 
-/* Dark mode for video overlay and header */
 body.dark-mode .video-overlay {
   background: rgba(0, 0, 0, 0.7);
 }
 
 body.dark-mode .thinner {
+  /* MODIFIED: Dark Glassmorphism for .thinner (Header) */
   background: rgba(0, 0, 0, 0.25) !important;
   backdrop-filter: blur(15px) saturate(150%) !important;
   -webkit-backdrop-filter: blur(15px) saturate(150%) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Dark footer */
 body.dark-mode .my-class {
+  /* Dark footer for dark mode - exact match to main page */
   background: rgba(0, 0, 0, 0.25) !important;
   backdrop-filter: blur(10px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(10px) saturate(180%) !important;
@@ -794,7 +882,6 @@ body.dark-mode footer {
   background: transparent !important;
 }
 
-/* Dark mode styling for input fields */
 body.dark-mode .form__field {
   color: #ff6b35 !important;
   border-bottom-color: #ff6b35 !important;
@@ -812,29 +899,13 @@ body.dark-mode .form__field:focus ~ .form__label {
   color: #ff6b35 !important;
 }
 
-/* Dark mode styling for buttons */
-body.dark-mode .btn-outline-primary {
-  color: white !important;
-  border-color: rgba(255, 255, 255, 0.5) !important;
-  background-color: rgba(255, 255, 255, 0.1) !important;
-}
-
-body.dark-mode .btn-outline-primary:hover {
-  background-color: rgba(255, 255, 255, 0.2) !important;
-  border-color: rgba(255, 255, 255, 0.8) !important;
-}
-
-
 body.dark-mode #progress-container {
   background-color: #333 !important;
 }
 
 body.dark-mode #progress-bar {
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%) !important; /* from enh/ui */
-  box-shadow: 0 0 20px rgba(102, 126, 234, 0.6) !important; /* from enh/ui */
-  transition: width 0.25s linear !important; /* from enh/ui */
+  background: #ff6b35 !important;
 }
-
 
 /* Responsive Design */
 @media screen and (max-width: 990px) {
@@ -944,129 +1015,5 @@ body.dark-mode .animated-button span:last-child {
 }
 
 .nav-link:hover {
-  color: #667eea !important;
-}
-
-/* Mobile navbar styles now come from main style.css */
-
-@media (max-width: 768px) {
-  .timer {
-    font-size: 80px;
-    letter-spacing: 6px;
-  }
-
-  .button-pill {
-    font-size: 0.85em;
-    padding: 10px 20px;
-  }
-
-  #counter-background {
-    padding: 100px 15px 40px !important;
-  }
-
-  .buttons {
-    font-size: 0.9em;
-    padding: 12px 25px;
-    margin: 5px;
-  }
-
-  #progress-container {
-    max-width: 90%;
-  }
-
-  h5 {
-    font-size: 1em !important;
-  }
-
-  h3 {
-    font-size: 1.2em !important;
-  }
-
-  #title1 {
-    font-size: 1.1rem;
-  }
-
-  .maintitle img {
-    height: 2.5rem !important;
-    width: 2.5rem !important;
-  }
-
-  #custom-timer-form {
-    gap: 15px;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .form__group {
-    max-width: 140px;
-  }
-
-  .animated-button {
-    padding: 9px 25px;
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 480px) {
-  .timer {
-    font-size: 60px;
-    letter-spacing: 2px;
-  }
-
-  .button-pill {
-    font-size: 0.75em;
-    padding: 8px 16px;
-  }
-
-  #counter-background {
-    padding: 90px 10px 30px !important;
-  }
-
-  .buttons {
-    font-size: 0.8em;
-    padding: 10px 20px;
-    margin: 5px;
-  }
-
-  h5 {
-    font-size: 0.9em !important;
-  }
-
-  h3 {
-    font-size: 1.1em !important;
-  }
-
-  #progress-container {
-    max-width: 95%;
-    height: 6px;
-  }
-
-  #title1 {
-    font-size: 1rem;
-  }
-
-  .maintitle img {
-    height: 2rem !important;
-    width: 2rem !important;
-    margin-right: 0.5rem !important;
-  }
-
-  .nav-link {
-    font-size: 0.85rem !important;
-  }
-
-  #custom-timer-form {
-    gap: 12px;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .form__group {
-    max-width: 120px;
-  }
-
-  .animated-button {
-    padding: 8px 20px;
-    font-size: 12px;
-  }
+  color: #ff6b35 !important;
 }
