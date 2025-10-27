@@ -23,21 +23,33 @@
 </head>
 
 <body>
-  <!-- Dynamic Video Background System -->
-  <div id="video-background-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -999; overflow: hidden;">
-    <video id="video-bg-1" class="background-video active" width="100%" height="100%" autoplay muted loop style="object-fit: cover; position: absolute; top: 0; left: 0; opacity: 1; transition: opacity 1s ease-in-out;">
+  <!-- Video Background -->
+  <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -999;">
+    <video width="100%" height="100%" autoplay muted loop style="object-fit: cover;">
       <source src="lofi.mp4" type="video/mp4">
     </video>
-    <video id="video-bg-2" class="background-video" width="100%" height="100%" muted loop style="object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 1s ease-in-out;">
-      <source src="lofi1.mp4" type="video/mp4">
-    </video>
-    <video id="video-bg-3" class="background-video" width="100%" height="100%" muted loop style="object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 1s ease-in-out;">
-      <source src="lofi2.mp4" type="video/mp4">
-    </video>
-    <video id="video-bg-4" class="background-video" width="100%" height="100%" muted loop style="object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 1s ease-in-out;">
-      <source src="lofi3.mp4" type="video/mp4">
-    </video>
+    <div id="animated-background" class="animated-bg" style="display: none;"></div>
   </div>
+
+  <!-- Background Controls -->
+  <div id="background-controls"
+    style="position: fixed; top: 100px; right: 20px; z-index: 1001; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 15px; border-radius: 10px; display: none;">
+    <h5 style="color: white; margin-bottom: 10px;">Background</h5>
+    <select id="background-selector" class="theme-dropdown" style="margin-bottom: 10px;">
+      <option value="video">Video Background</option>
+      <option value="particles">Particles</option>
+      <option value="waves">Waves</option>
+      <option value="matrix">Matrix Rain</option>
+      <option value="stars">Starfield</option>
+    </select>
+    <input type="file" id="custom-video" accept="video/*" style="display: block; margin-top: 5px; color: white;">
+  </div>
+
+  <!-- Background Toggle Button -->
+  <button id="bg-toggle"
+    style="position: fixed; top: 100px; right: 20px; z-index: 1002; background: rgba(255,255,255,0.2); border: none; color: white; padding: 10px; border-radius: 50%; cursor: pointer;">
+    🎨
+  </button>
 
   <div class="video-overlay"
     style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.1); z-index: -998;">
@@ -79,14 +91,15 @@
         </ul>
         <div id="switch-theme">
           <input type="checkbox" id="light" class="checkbox">
-          <label for="light" class="label">
+          <label for="checkbox" class="label">
             <i class="fas fa-moon"></i>
             <i class='fas fa-sun'></i>
-            <div class='ball'></div>
+            <div class='ball'>
+              </ball>
+            </div>
           </label>
         </div>
       </div>
-    </div>
   </nav>
   <div class="container-fluid">
     <div id="container">
@@ -122,45 +135,44 @@
     Start Countdown
   </button>
 </div>
-      <div class="timer-card animate-scale-in">
-        <div id="time">
-          <div class="time-unit animate-slide-up" style="animation-delay: 0.1s;">
-            <span class="digit" id="hr">00</span>
-            <span class="txt">Hours</span>
-          </div>
-          <div class="time-unit animate-slide-up" style="animation-delay: 0.2s;">
-            <span class="digit" id="min">00</span>
-            <span class="txt">Minutes</span>
-          </div>
-          <div class="time-unit animate-slide-up" style="animation-delay: 0.3s;">
-            <span class="digit" id="sec">00</span>
-            <span class="txt">Seconds</span>
-          </div>
-          <div class="time-unit animate-slide-up" style="animation-delay: 0.4s;">
-            <span class="digit" id="count">00</span>
-            <span class="txt">Millisec</span>
-          </div>
-        </div>
-        <!-- Progress Ring -->
-        <div class="progress-ring" id="progress-ring" style="display: none;">
-          <svg width="120" height="120">
-            <circle cx="60" cy="60" r="54" stroke="rgba(255,255,255,0.1)" stroke-width="4" fill="none"/>
-            <circle cx="60" cy="60" r="54" stroke="url(#gradient)" stroke-width="4" fill="none" 
-                    stroke-dasharray="339.292" stroke-dashoffset="339.292" id="progress-circle"/>
-            <defs>
-              <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#667eea"/>
-                <stop offset="100%" style="stop-color:#764ba2"/>
-              </linearGradient>
-            </defs>
-          </svg>
-          <div class="progress-text">
-            <span id="progress-seconds">0</span>
-            <small>sec</small>
+      <div>
+        <!-- Progress Circle Container -->
+        <div id="progress-container">
+          <div class="progress-circle" id="progress-circle">
+            <svg class="progress-ring" width="300" height="300">
+              <circle class="progress-ring-background" cx="150" cy="150" r="140" />
+              <circle class="progress-ring-circle" cx="150" cy="150" r="140" id="progress-ring-circle" />
+            </svg>
+            <div class="progress-content">
+              <div id="time">
+                <span>
+                  <span class="digit" id="hr">00</span>
+                  <span class="txt">Hr</span>
+                </span>
+                <span>
+                  <span class="digit" id="min">00</span>
+                  <span class="txt">Min</span>
+                </span>
+                <span>
+                  <span class="digit" id="sec">00</span>
+                  <span class="txt">Sec</span>
+                </span>
+                <span>
+                  <span class="digit" id="count">00</span>
+                  <span class="txt">Ms</span>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-        
-        <div class="todayDate animate-slide-up" style="animation-delay: 0.5s;">
+
+        <!-- Progress Bars for Laps -->
+        <div id="lap-progress-bars" style="display: none;">
+          <h4>Lap Progress</h4>
+          <div id="lap-bars-container"></div>
+        </div>
+
+        <span class="todayDate">
           <h3><span id="d1"></span></h3>
         </div>
       </div>
@@ -217,47 +229,61 @@
             <tbody id="record-table-body"></tbody>
           </table>
         </div>
-      </div>
-      <hr />
     </div>
   </div>
 
   <script type="text/javascript">
-    // start or stop stopwatch using "spacebar" key
+    // ============================================
+    // KEYBOARD SHORTCUTS
+    // ============================================
+    // Space = Start/Pause
     document.addEventListener("keydown", (event) => {
       if (event.code === "Space") {
         event.preventDefault();
         start();
       }
     });
+
+    // R = Reset
     document.addEventListener("keydown", (event) => {
-      if (event.code === "Backspace") {
+      if (event.code === "KeyR") {
+        event.preventDefault();
         reset();
       }
     });
+
+    // L = Lap
     document.addEventListener("keydown", (event) => {
-      if (event.code === "Enter") {
+      if (event.code === "KeyL") {
+        event.preventDefault();
         lap();
       }
     });
 
+    // Legacy shortcuts (kept for backward compatibility)
     document.addEventListener("keydown", (event) => {
-      if (event.code === "Numpad0") {
-        clearLap();
+      if (event.code === "Backspace") {
+        event.preventDefault();
+        reset();
+      }
+    });
+    
+    document.addEventListener("keydown", (event) => {
+      if (event.code === "Enter") {
+        event.preventDefault();
+        lap();
       }
     });
 
-    // P key for Start/Stop
+      document.addEventListener("keydown", (event) => {
+        if (event.code === "Numpad0") {
+          clearLap();
+        }
+      });
+
     document.addEventListener("keydown", (event) => {
       if (event.code === "KeyP") {
         start();
-      }
-    });
-
-    // R key for Reset
-    document.addEventListener("keydown", (event) => {
-      if (event.code === "KeyR") {
-        reset();
       }
     });
 
